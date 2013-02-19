@@ -59,9 +59,12 @@ class Html {
 		return static::element('a', $title, $attributes);
 	}
 	
-	public static function Markdown($text) {
-		$md = new \Markdown;
-		return $md->transform($text);
+	public static function Markdown($text, $markitdown='yes') {
+		if ($markitdown=='yes') {
+			$md = new \Markdown;
+			$text = $md->transform($text);
+		}
+		return $text;
 	}
 
 }
