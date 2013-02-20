@@ -12,7 +12,11 @@
 					</h1>
 
 					<div class="content">
-						<?php echo Html::markdown(article_html()); ?>
+						<?php
+						echo article_custom_field('attachimg1') ? '<p><a href="'.article_custom_field('attachimg1').'"><img src="'.article_custom_field('attachimg1').'_preview.png" alt="Attached Image." /></a></p>' : '';
+						echo Html::markdown(article_html());
+						if (article_custom_field('attachimg2')||article_custom_field('attachimg3')||article_custom_field('attachimg4')||article_custom_field('attachimg5')||article_custom_field('attachfile1')||article_custom_field('videohuluid')||article_custom_field('videoyoutubeid')||article_custom_field('videovimeoid')) echo "<br /><a href=\"".article_url()."\" title=\"".article_title()."\">See more</a>.";
+						?>
 					</div>
 
 					<footer>

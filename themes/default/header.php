@@ -38,6 +38,11 @@
     		<!--  Custom Javascript -->
     		<script><?php echo article_js(); ?></script>
 		<?php endif; ?>
+
+		<?php if (($theext = @pathinfo(article_custom_field('attachfile1'), PATHINFO_EXTENSION))=="webm"||$theext=="mp4"): ?>
+			<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+			<script src="http://vjs.zencdn.net/c/video.js"></script>
+		<?php endif; ?>
 	</head>
 	<body class="<?php echo body_class(); ?>">
 		<div class="main-wrap">
