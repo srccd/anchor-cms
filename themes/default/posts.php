@@ -12,15 +12,11 @@
 					</h1>
 
 					<div class="content">
-<<<<<<< HEAD
-						<?php echo Html::markdown(article_html(article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'),article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'); // this is doing a dance around markdown for items that don't want it ?>
-=======
 						<?php
 						echo article_custom_field('attachimg1') ? '<p><a href="'.article_custom_field('attachimg1').'"><img src="'.article_custom_field('attachimg1').'_preview.png" alt="Attached Image." /></a></p>' : '';
-						echo Html::markdown(article_html());
+						echo Html::markdown(article_html(article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'),article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'); // this is doing a dance around markdown for items that don't want it
 						if (article_custom_field('attachimg2')||article_custom_field('attachimg3')||article_custom_field('attachimg4')||article_custom_field('attachimg5')||article_custom_field('attachfile1')||article_custom_field('videohuluid')||article_custom_field('videoyoutubeid')||article_custom_field('videovimeoid')) echo "<br /><a href=\"".article_url()."\" title=\"".article_title()."\">See more</a>.";
 						?>
->>>>>>> dev_attachplus
 					</div>
 
 					<footer>
