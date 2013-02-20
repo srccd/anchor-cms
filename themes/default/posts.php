@@ -1,4 +1,5 @@
 <?php theme_include('header'); ?>
+<?php $disqus_shortname = ''; //set to your Disqus site shortname to use disqus instead of default comment system ?>
 
 <section class="content">
 
@@ -16,7 +17,7 @@
 					</div>
 
 					<footer>
-						Posted <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time> by <?php echo article_author('real_name'); ?>.
+						Posted <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time> by <?php echo article_author('real_name'); ?>.<?php if(comments_open()&&$disqus_shortname!=''): ?> It has <a href="<?php echo article_url(); ?>#disqus_thread">0 Comments</a>.<?php endif; ?>
 					</footer>
 				</article>
 			</li>
@@ -45,5 +46,17 @@
 	<?php endif; ?>
 
 </section>
+
+<?php if($disqus_shortname!=''): ?>
+<script type="text/javascript">
+var disqus_shortname = '<?php echo $disqus_shortname; ?>';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<?php endif; ?>
 
 <?php theme_include('footer'); ?>
