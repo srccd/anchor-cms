@@ -27,10 +27,9 @@ function article_description() {
 	return Registry::prop('article', 'description');
 }
 
-function article_html() {
+function article_html($processMarkdown=’yes’) {
 	$html = Registry::prop('article', 'html');
-
-	return Post::parse($html);
+	return Post::parse($html, $processMarkdown);
 }
 
 function article_css() {

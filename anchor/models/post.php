@@ -18,7 +18,7 @@ class Post extends Model {
 		return static::where('slug', 'like', $slug)->fetch();
 	}
 
-	public static function parse($str) {
+	public static function parse($str, $markitdown='yes') {
 		// process tags
 		//$pattern = '/[\{\{|\[\[]+([a-z]+)[\}\}|\]\]]+/i';
 		$pattern = '/[\{\{]{1}([a-z]+)[\}\}]{1}/i';
@@ -33,9 +33,11 @@ class Post extends Model {
 			$str = str_replace($search, $replace, $str);
 		}
 
-		$md = new Markdown;
-
-		return $md->transform($str);
+		if ($markitdown=='yes') {
+			$md = new Markdown;
+			$str = $md->transform($str);
+		}
+		return $str;
 	}
 
 }
