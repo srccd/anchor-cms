@@ -4,7 +4,23 @@
 			<h1><?php echo article_title(); ?></h1>
 
 			<article>
-				<?php echo article_html(article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'); //allows ignoring markdown for certain articles ?>
+				<?php
+				echo article_custom_field('attachimg1') ? '<p><a href="'.article_custom_field('attachimg1').'"><img src="'.article_custom_field('attachimg1').'_preview.png" alt="Attached Image." /></a></p>' : '';
+				if (($theext = @pathinfo(article_custom_field('attachfile1'), PATHINFO_EXTENSION))=="webm"||$theext=="mp4") echo '<video id="attachvideo" class="video-js vjs-default-skin" width="400" height="240" controls preload="none" data-setup="{}"><source src="'.article_custom_field('attachfile1').'" type=\'video/webm; codecs="vp8, vorbis"\' /></video><script>var attachvideo = _V_("attachvideo");</script>';
+				echo article_custom_field('videohuluid') ? '<iframe width="500" height="281" src="http://www.hulu.com/embed.html?eid='.article_custom_field('videohuluid').'" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://hulu.com/watch/?eid='.article_custom_field('videohuluid').'">See at Hulu</a>.</p>' : '';
+				echo article_custom_field('videoyoutubeid') ? '<iframe width="500" height="281" src="http://www.youtube.com/embed/'.article_custom_field('videoyoutubeid').'" frameborder="0" allowfullscreen></iframe> <p><a href="http://youtu.be/'.article_custom_field('videoyoutubeid').'">See at YouTube</a>.</p>' : '';
+				echo article_custom_field('videovimeoid') ? '<iframe src="http://player.vimeo.com/video/'.article_custom_field('videovimeoid').'" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p><a href="http://vimeo.com/'.article_custom_field('videovimeoid').'">See at Vimeo</a>.</p>' : '';
+				echo article_html(article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'); //allows ignoring markdown for certain articles
+				if ($theext!="webm") echo article_custom_field('attachfile1') ? '<p>Attachment: <a href="'.article_custom_field('attachfile1').'">'.article_custom_field('attachfile1').'</a></p>' : '';
+				if (article_custom_field('attachimg2')||article_custom_field('attachimg3')||article_custom_field('attachimg4')||article_custom_field('attachimg5')) {
+					echo '<p></p><div class="attachimgcontainer">';
+					echo article_custom_field('attachimg2') ? '<a href="'.article_custom_field('attachimg2').'"><img src="'.article_custom_field('attachimg2').'_thumb.png" alt="Attached Image." /></a>' : '';
+					echo article_custom_field('attachimg3') ? '<a href="'.article_custom_field('attachimg3').'"><img src="'.article_custom_field('attachimg3').'_thumb.png" alt="Attached Image." /></a>' : '';
+					echo article_custom_field('attachimg4') ? '<a href="'.article_custom_field('attachimg4').'"><img src="'.article_custom_field('attachimg4').'_thumb.png" alt="Attached Image." /></a>' : '';
+					echo article_custom_field('attachimg5') ? '<a href="'.article_custom_field('attachimg5').'"><img src="'.article_custom_field('attachimg5').'_thumb.png" alt="Attached Image." /></a>' : '';
+					echo "</div>";
+				}
+				?>
 			</article>
 			
 			<section class="footnote">
