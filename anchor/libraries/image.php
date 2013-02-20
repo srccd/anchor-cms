@@ -2,8 +2,8 @@
 
 class Image {
 
-	protected static $src_image, $src_w, $src_h;
-	protected static $dst_image;
+	protected $src_image, $src_w, $src_h;
+	protected $dst_image;
 
 	public function __construct($src_image, $src_w, $src_h) {
 		$this->src_image = $src_image;
