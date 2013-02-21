@@ -12,7 +12,7 @@
 					</h1>
 
 					<div class="content">
-						<?php echo Html::markdown(article_html()); ?>
+						<?php echo Html::markdown(article_html(article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'),article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'); // this is doing a dance around markdown for items that don't want it ?>
 					</div>
 
 					<footer>

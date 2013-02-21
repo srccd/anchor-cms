@@ -4,7 +4,7 @@
 			<h1><?php echo article_title(); ?></h1>
 
 			<article>
-				<?php echo article_html(); ?>
+				<?php echo article_html(article_custom_field('processmarkdown')?article_custom_field('processmarkdown'):'yes'); //allows ignoring markdown for certain articles ?>
 			</article>
 			
 			<section class="footnote">
