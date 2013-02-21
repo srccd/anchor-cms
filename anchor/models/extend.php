@@ -183,6 +183,7 @@ class Extend extends Model {
 
 						$image->output($ext, $filepath);
 					}
+					$image->makeathumb($filepath);
 				}
 
 				return Json::encode(compact('name', 'filename'));
