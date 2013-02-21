@@ -16,7 +16,7 @@
 					</div>
 
 					<footer>
-						Posted <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time> by <?php echo article_author('real_name'); ?>.
+						Posted <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time> by <?php echo article_author('real_name'); ?>.<?php echo article_custom_field('tags') ? '<br/>Tagged: '.article_custom_field('tags') : ''; ?>
 					</footer>
 				</article>
 			</li>
