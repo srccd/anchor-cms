@@ -26,13 +26,21 @@ class ImageTweak extends Image {
 		if(file_exists($file) === false) {
 			return false;
 		}
+		//Need to see if it is a GIF due to the frame issue
+		list($width, $height, $type) = getimagesize($file);
+		$thegifkind = '';
+		$thegifnum = '';
+		if($type === IMAGETYPE_GIF) {
+			$thegifkind = " -coalesce";
+			$thegifnum = "[0]";
+		}
 		//$theexifreturn = system('/usr/bin/convert -define jpeg:size=400x400 "'.$file.'" -thumbnail "250x250>" "'.$file.'_thumb.png" 2>&1'); //if you want to save some processing power
-		$theexifreturn = system('/usr/bin/convert "'.$file.'" -background transparent -thumbnail "250x250>" "'.$file.'_thumb.png" 2>&1');
+		$theexifreturn = system('/usr/bin/convert "'.$file.$thegifnum.'" -background transparent'.$thegifkind.' -thumbnail "250x250>" "'.$file.'_thumb.png" 2>&1');
 		if (strlen($theexifreturn) > 1) {
 			return false;
 		}
 		//$theexifreturn = system('/usr/bin/convert -define jpeg:size=800x800 "'.$file.'" -thumbnail "500x500>" "'.$file.'_preview.png" 2>&1'); //if you want to save some processing power
-		$theexifreturn = system('/usr/bin/convert "'.$file.'" -background transparent -thumbnail "500x500>" "'.$file.'_preview.png" 2>&1');
+		$theexifreturn = system('/usr/bin/convert "'.$file.$thegifnum.'" -background transparent'.$thegifkind.' -thumbnail "500x500>" "'.$file.'_preview.png" 2>&1');
 		if (strlen($theexifreturn) > 1) {
 			return false;
 		}
