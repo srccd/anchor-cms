@@ -165,7 +165,11 @@ class Extend extends Base {
 
 				// resize image
 				if(isset($extend->attributes->size->width) and isset($extend->attributes->size->height)) {
-					$image = Image::open($filepath);
+					//$image = Image::open($filepath); //old way
+					$image = ImageTweak::rotationfix($filepath); //new way
+					//use old way if you don't have ImageMagick
+					//use the new way if you have ImageMagick and want to
+					//respect img orientation and create thumbnails
 
 					$width = intval($extend->attributes->size->width);
 					$height = intval($extend->attributes->size->height);
