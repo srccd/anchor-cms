@@ -3,35 +3,56 @@
 /**
  * Nano
  *
- * Lightweight php framework
+ * Just another php framework
  *
  * @package		nano
- * @author		k. wilson
  * @link		http://madebykieron.co.uk
+ * @copyright	http://unlicense.org/
  */
 
-use System\Config, System\Cookie as C;
+use System\Cookie as C;
+use System\Session\Driver;
+use Exception;
 
 class Cookie extends Driver {
 
-	public $payload_cookie;
+	public function read($id) {
+		extract($this->config);
 
-	public function __construct() {
-		$this->payload_cookie = Config::get('session.cookie', 'session') . '_payload';
-	}
+		// check if the cookie exists
+		if($encoded = C::read($cookie . '_payload')) {
+			// try decoding first
+			if($decoded = base64_decode($encoded)) {
+				// verify signature
+				$sign = substr($decoded, 0, 32);
+				$serialized = substr($decoded, 32);
 
-	public function load($id) {
-		if(C::has($this->payload_cookie)) {
-			return unserialize(C::get($this->payload_cookie));
+				if(hash('md5', $serialized) == $sign) {
+					return unserialize($serialized);
+				}
+			}
 		}
 	}
 
-	public function save($session, $config, $exists) {
-		extract($config, EXTR_SKIP);
+	public function write($id, $cargo) {
+		extract($this->config);
 
-		$payload = serialize($session);
+		// if the session is set to never expire
+		// we will set it to 1 year
+		if($lifetime == 0) {
+			$lifetime = (3600 * 24 * 365);
+		}
 
-		C::put($this->payload_cookie, $payload, $lifetime, $path, $domain);
+		// serialize data into a srting
+		$serialized = serialize($cargo);
+
+		// create a signature to verify content when unpacking
+		$sign = hash('md5', $serialized);
+
+		// encode all the data
+		$data = base64_encode($sign . $serialized);
+
+		C::write($cookie . '_payload', $data, $lifetime, $path, $domain, $secure);
 	}
 
 }

@@ -1,31 +1,27 @@
 <?php echo $header; ?>
 
 <hgroup class="wrap">
-	<h1><?php echo __('comments.comments', 'Comments'); ?></h1>
-
-	<?php if($comments->count): ?>
-		<nav>
-			<a class="btn" href="<?php echo admin_url('comments'); ?>">All</a>
-			<a class="btn" href="<?php echo admin_url('comments/pending'); ?>">Pending</a>
-			<a class="btn" href="<?php echo admin_url('comments/approved'); ?>">Approved</a>
-			<a class="btn" href="<?php echo admin_url('comments/spam'); ?>">Spam</a>
-		</nav>
-	<?php endif; ?>
+	<h1><?php echo __('comments.comments'); ?></h1>
 </hgroup>
 
 <section class="wrap">
 	<?php echo $messages; ?>
 
+	<nav class="sidebar statuses">
+		<?php foreach($statuses as $data): extract($data); ?>
+		<?php echo Html::link('admin/comments/' . $url, '<span class="icon"></span> ' . __($lang), array(
+			'class' => $class . (isset($status) and $status == $url ? ' active' : '')
+		)); ?>
+		<?php endforeach; ?>
+	</nav>
+
 	<?php if($comments->count): ?>
-	<ul class="list">
+	<ul class="main list">
 		<?php foreach($comments->results as $comment): ?>
 		<li>
-			<a href="<?php echo admin_url('comments/edit/' . $comment->id); ?>">
-				<strong><?php echo Str::truncate(strip_tags($comment->text), 2); ?></strong>
-
-				<span><?php echo __('comments.created', 'Created'); ?> <time><?php echo Date::format($comment->date); ?></time>
-				<?php echo __('comments.by', 'by'); ?> <?php echo $comment->name; ?></span>
-
+			<a href="<?php echo Uri::to('admin/comments/edit/' . $comment->id); ?>">
+				<strong><?php echo strip_tags($comment->text); ?></strong>
+				<span><time><?php echo Date::format($comment->date); ?></time></span>
 				<span class="highlight"><?php echo $comment->status; ?></span>
 			</a>
 		</li>
@@ -37,7 +33,7 @@
 	<?php else: ?>
 	<p class="empty comments">
 		<span class="icon"></span>
-		<?php echo __('comments.no_comments', 'No comments, yet.'); ?>
+		<?php echo __('comments.nocomments_desc'); ?>
 	</p>
 	<?php endif; ?>
 </section>
