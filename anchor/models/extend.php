@@ -1,17 +1,17 @@
 <?php
 
-class Extend extends Model {
+class Extend extends Base {
 
 	public static $table = 'extend';
 
 	public static function field($type, $key, $id = -1) {
-		$field = Query::table(static::$table)
+		$field = Query::table(static::table())
 			->where('type', '=', $type)
 			->where('key', '=', $key)
 			->fetch();
 
 		if($field) {
-			$meta = Query::table($type . '_meta')
+			$meta = Query::table(static::table($type . '_meta'))
 				->where($type, '=', $id)
 				->where('extend', '=', $field->id)
 				->fetch();
@@ -50,10 +50,10 @@ class Extend extends Model {
 	}
 
 	public static function fields($type, $id = -1) {
-		$fields = Query::table(static::$table)->where('type', '=', $type)->get();
+		$fields = Query::table(static::table())->where('type', '=', $type)->get();
 
 		foreach(array_keys($fields) as $index) {
-			$meta = Query::table($type . '_meta')
+			$meta = Query::table(static::table($type . '_meta'))
 				->where($type, '=', $id)
 				->where('extend', '=', $fields[$index]->id)
 				->fetch();
@@ -107,13 +107,13 @@ class Extend extends Model {
 	}
 
 	public static function paginate($page = 1, $perpage = 10) {
-		$query = Query::table(static::$table);
+		$query = Query::table(static::table());
 
 		$count = $query->count();
 
 		$results = $query->take($perpage)->skip(($page - 1) * $perpage)->get();
 
-		return new Paginator($results, $count, $page, $perpage, admin_url('extend/fields'));
+		return new Paginator($results, $count, $page, $perpage, Uri::to('admin/extend/fields'));
 	}
 
 	/*
@@ -142,7 +142,8 @@ class Extend extends Model {
 
 		$ext = pathinfo($file['name'], PATHINFO_EXTENSION);
 
-		$filename = hash('crc32', file_get_contents($file['tmp_name'])) . '.' . $ext;
+		// Added rtrim to remove file extension before adding again
+		$filename = slug(rtrim($file['name'], '.' . $ext)) . '.' . $ext;
 		$filepath = $storage . $filename;
 
 		if(move_uploaded_file($file['tmp_name'], $filepath)) {
@@ -153,7 +154,7 @@ class Extend extends Model {
 	}
 
 	public static function process_image($extend) {
-		$file = array_get(static::files(), $extend->key);
+		$file = Arr::get(static::files(), $extend->key);
 
 		if($file and $file['error'] === UPLOAD_ERR_OK) {
 			$name = basename($file['name']);
@@ -173,11 +174,10 @@ class Extend extends Model {
 					$width = intval($extend->attributes->size->width);
 					$height = intval($extend->attributes->size->height);
 
-					// if a width and height is set and is not the same
-					// size as the uploaed file
+					// resize larger images
 					if(
 						($width and $height) and
-						($width <> $image->width() or $height <> $image->height())
+						($image->width() > $width or $image->height() > $height)
 					) {
 						$image->resize($width, $height);
 
@@ -192,7 +192,7 @@ class Extend extends Model {
 	}
 
 	public static function process_file($extend) {
-		$file = array_get(static::files(), $extend->key);
+		$file = Arr::get(static::files(), $extend->key);
 
 		if($file and $file['error'] === UPLOAD_ERR_OK) {
 			$name = basename($file['name']);
@@ -231,7 +231,7 @@ class Extend extends Model {
 
 			// save data
 			if( ! is_null($data)) {
-				$table = $extend->type . '_meta';
+				$table = static::table($extend->type . '_meta');
 				$query = Query::table($table)
 					->where('extend', '=', $extend->id)
 					->where($extend->type, '=', $item);
@@ -251,7 +251,7 @@ class Extend extends Model {
 			// remove data
 			if(Input::get('extend_remove.' . $extend->key)) {
 				if(isset($extend->value->filename) and strlen($extend->value->filename)) {
-					Query::table($extend->type . '_meta')
+					Query::table(static::table($extend->type . '_meta'))
 						->where('extend', '=', $extend->id)
 						->where($extend->type, '=', $item)->delete();
 
