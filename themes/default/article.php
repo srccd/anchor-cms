@@ -11,10 +11,10 @@
 				echo article_custom_field('videohuluid') ? '<iframe width="500" height="281" src="http://www.hulu.com/embed.html?eid='.article_custom_field('videohuluid').'" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://hulu.com/watch/?eid='.article_custom_field('videohuluid').'">See at Hulu</a>.</p>' : '';
 				echo article_custom_field('videoyoutubeid') ? '<iframe width="500" height="281" src="http://www.youtube.com/embed/'.article_custom_field('videoyoutubeid').'" frameborder="0" allowfullscreen></iframe> <p><a href="http://youtu.be/'.article_custom_field('videoyoutubeid').'">See at YouTube</a>.</p>' : '';
 				echo article_custom_field('videovimeoid') ? '<iframe src="http://player.vimeo.com/video/'.article_custom_field('videovimeoid').'" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p><a href="http://vimeo.com/'.article_custom_field('videovimeoid').'">See at Vimeo</a>.</p>' : '';
-				if (article_custom_field('processmarkdown')=='yes') {
-					echo article_markdown();
-				}else{
+				if (article_custom_field('processmarkdown')=='no') {
 					echo article_html();
+				}else{
+					echo article_markdown();
 				}
 				if ($theext!="webm") echo article_custom_field('attachfile1') ? '<p>Attachment: <a href="'.article_custom_field('attachfile1').'">'.article_custom_field('attachfile1').'</a></p>' : '';
 				if (article_custom_field('attachimg2')||article_custom_field('attachimg3')||article_custom_field('attachimg4')||article_custom_field('attachimg5')) {

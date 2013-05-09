@@ -15,10 +15,10 @@
 					<div class="content">
 						<?php
 						echo article_custom_field('attachimg1') ? '<p><a href="'.article_custom_field('attachimg1').'"><img src="'.article_custom_field('attachimg1').'_preview.png" alt="Attached Image." /></a></p>' : '';
-						if (article_custom_field('processmarkdown')=='yes') {
-							echo article_markdown();
-						}else{
+						if (article_custom_field('processmarkdown')=='no') {
 							echo article_html();
+						}else{
+							echo article_markdown();
 						}
 						if (article_custom_field('attachimg2')||article_custom_field('attachimg3')||article_custom_field('attachimg4')||article_custom_field('attachimg5')||article_custom_field('attachfile1')||article_custom_field('videohuluid')||article_custom_field('videoyoutubeid')||article_custom_field('videovimeoid')) echo "<br /><a href=\"".article_url()."\" title=\"".article_title()."\">See more</a>.";
 						?>
