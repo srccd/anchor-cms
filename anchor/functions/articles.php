@@ -15,12 +15,34 @@ function article_slug() {
 	return Registry::prop('article', 'slug');
 }
 
-function article_url() {
-	if($slug = article_slug()) {
+function article_previous_url() {
+	$page = Registry::get('posts_page');
+	$query = Post::where('created', '<', Registry::prop('article', 'created'));
+
+	if($query->count()) {
+		$article = $query->sort('created', 'desc')->fetch();
 		$page = Registry::get('posts_page');
 
-		return base_url($page->slug . '/' . $slug);
+		return base_url($page->slug . '/' . $article->slug);
 	}
+}
+
+function article_next_url() {
+	$page = Registry::get('posts_page');
+	$query = Post::where('created', '>', Registry::prop('article', 'created'));
+
+	if($query->count()) {
+		$article = $query->sort('created', 'asc')->fetch();
+		$page = Registry::get('posts_page');
+
+		return base_url($page->slug . '/' . $article->slug);
+	}
+}
+
+function article_url() {
+	$page = Registry::get('posts_page');
+
+	return base_url($page->slug . '/' . article_slug());
 }
 
 function article_description() {
@@ -28,9 +50,11 @@ function article_description() {
 }
 
 function article_html() {
-	$html = Registry::prop('article', 'html');
+	return parse(Registry::prop('article', 'html'), false);
+}
 
-	return Post::parse($html);
+function article_markdown() {
+	return parse(Registry::prop('article', 'html'));
 }
 
 function article_css() {
@@ -43,7 +67,7 @@ function article_js() {
 
 function article_time() {
 	if($created = Registry::prop('article', 'created')) {
-		return strtotime($created);
+		return Date::format($created, 'U');
 	}
 }
 
@@ -86,19 +110,15 @@ function article_total_comments() {
 }
 
 function article_author() {
-	if($user = User::search(array('id' => article_author_id()))) {
-		return $user->real_name;
-	}
-
-	return false;
+	return Registry::prop('article', 'author_name');
 }
 
 function article_author_id() {
-	return Registry::prop('article', 'author');
+	return Registry::prop('article', 'author_id');
 }
 
 function article_author_bio() {
-	return Registry::prop('article', 'bio');
+	return Registry::prop('article', 'author_bio');
 }
 
 function article_custom_field($key, $default = '') {

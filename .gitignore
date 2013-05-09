@@ -9,8 +9,9 @@ Thumbs.db
 /anchor/config/dev
 
 # generated config
-/anchor/config/application.php
-/anchor/config/database.php
+/anchor/config/app.php
+/anchor/config/db.php
+/anchor/config/session.php
 
 # user mod_rewrite
 /.htaccess
@@ -19,5 +20,15 @@ Thumbs.db
 /themes/*
 !/themes/default
 
+# uploaded content
+/content/*
+!/content/index.php
+
+# plugins
+/plugins/*
+
 # phpunit tests
 /tests
+
+# We all love Sublime Text and its awesome plugins, don't we?
+sftp-config.json
