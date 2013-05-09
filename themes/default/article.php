@@ -5,12 +5,13 @@
 			<h1><?php echo article_title(); ?></h1>
 
 			<article>
-				<?php echo article_html(); ?>
+				<?php echo article_markdown(); ?>
 			</article>
-			
+
 			<section class="footnote">
+				<!-- Unfortunately, CSS means everything's got to be inline. -->
 				<p>Posted <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time> by <?php echo article_author('real_name'); ?>.<?php if(comments_open()): ?> It has <?php if($disqus_shortname!=''): ?><a href="<?php echo article_url(); ?>#disqus_thread">0 Comments</a><?php else: echo total_comments() . pluralise(total_comments(), ' comment'); endif; ?> for now.<?php endif; ?><br/>
-					This article is my <?php echo numeral(article_id()); ?>. It is <?php echo count_words(article_html()); ?> words long. <?php echo article_custom_field('attribution'); ?><?php echo article_previous() ? ' <a href="'.article_previous().'">&laquo; Previous article</a>' : ''; ?><?php echo article_next() ? ' <a href="'.article_next().'">Next article &raquo;</a>' : ''; ?></p>
+				<p>This article is my <?php echo numeral(article_id()); ?>. It is <?php echo count_words(article_markdown()); ?> words long. <?php echo article_custom_field('attribution'); ?><?php echo article_previous() ? ' <a href="'.article_previous().'">&laquo; Previous article</a>' : ''; ?><?php echo article_next() ? ' <a href="'.article_next().'">Next article &raquo;</a>' : ''; ?></p>
 			</section>
 		</section>
 
@@ -38,11 +39,11 @@
 						<div class="wrap">
 							<h2><?php echo comment_name(); ?></h2>
 							<time><?php echo relative_time(comment_time()); ?></time>
-			
+
 							<div class="content">
 								<?php echo comment_text(); ?>
 							</div>
-							
+
 							<span class="counter"><?php echo $i; ?></span>
 						</div>
 					</li>
