@@ -14,7 +14,7 @@
 					<div class="content">
 						<?php
 						echo article_custom_field('attachimg1') ? '<p><a href="'.article_custom_field('attachimg1').'"><img src="'.article_custom_field('attachimg1').'_preview.png" alt="Attached Image." /></a></p>' : '';
-						echo Html::markdown(article_html());
+						echo article_markdown();
 						if (article_custom_field('attachimg2')||article_custom_field('attachimg3')||article_custom_field('attachimg4')||article_custom_field('attachimg5')||article_custom_field('attachfile1')||article_custom_field('videohuluid')||article_custom_field('videoyoutubeid')||article_custom_field('videovimeoid')) echo "<br /><a href=\"".article_url()."\" title=\"".article_title()."\">See more</a>.";
 						?>
 					</div>
@@ -24,8 +24,9 @@
 					</footer>
 				</article>
 			</li>
-			<?php $i = 0; while(posts()): $i++; ?>
-			<li style="background: hsl(215,28%,<?php echo round((($i / posts_per_page()) * 20) + 20); ?>%);">
+			<?php $i = 0; while(posts()): ?>
+			<?php $bg = sprintf('background: hsl(215, 28%%, %d%%);', round(((++$i / posts_per_page()) * 20) + 20)); ?>
+			<li style="<?php echo $bg; ?>">
 				<article class="wrap">
 					<h2>
 						<a href="<?php echo article_url(); ?>" title="<?php echo article_title(); ?>"><?php echo article_title(); ?></a>
