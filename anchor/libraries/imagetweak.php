@@ -1,6 +1,6 @@
 <?php
 class ImageTweak extends Image {
-	public function rotationfix($file) {
+	public static function rotationfix($file) {
 		if(file_exists($file) === false) {
 			return false;
 		}
