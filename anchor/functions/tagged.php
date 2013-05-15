@@ -33,7 +33,7 @@ function has_tagged_pagination() {
 	return Registry::get('total_posts') > Config::meta('posts_per_page');
 }
 
-function tagged_next($text = 'Next', $default = '') {
+function tagged_prev($text = ' &larr; Previous', $default = '') {
 	$per_page = Config::meta('posts_per_page');
 	$page = Registry::get('page_offset');
 
@@ -50,13 +50,13 @@ function tagged_next($text = 'Next', $default = '') {
 	$url = base_url($tagged_page->slug . '/' . $term . '/' . $next);
 
 	if(($page - 1) < $pages) {
-		return '<a href="' . $url . '">' . $text . '</a>';
+		return '<a href="' . $url . '" class="prev">' . $text . '</a>';
 	}
 
 	return $default;
 }
 
-function tagged_prev($text = 'Previous', $default = '') {
+function tagged_next($text = 'Next &rarr;', $default = '') {
 	$per_page = Config::get('meta.posts_per_page');
 	$page = Registry::get('page_offset');
 
@@ -73,7 +73,7 @@ function tagged_prev($text = 'Previous', $default = '') {
 	$url = base_url($tagged_page->slug . '/' . $term . '/' . $prev);
 
 	if($offset > 0) {
-		return '<a href="' . $url . '">' . $text . '</a>';
+		return '<a href="' . $url . '" class="next">' . $text . '</a>';
 	}
 
 	return $default;
