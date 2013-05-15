@@ -53,4 +53,25 @@ class Post extends Base {
 		return array($total, $posts);
 	}
 
+	public static function tagged($term, $page = 1, $per_page = 10) {
+		$query = static::left_join(Base::table('users'), Base::table('users.id'), '=', Base::table('posts.author'))
+			->left_join(Base::table('post_meta'), Base::table('post_meta.post'), '=', Base::table('posts.id'))
+			->join(Base::table('extend'), Base::table('extend.id'), '=', Base::table('post_meta.extend'))
+			->where(Base::table('posts.status'), '=', 'published')
+			->where(Base::table('extend.key'), '=', 'tags')
+			->where(Base::table('post_meta.data'), 'like', '{"text":"%'.$term.'%}');
+
+		$total = $query->count();
+
+		$posts = $query->sort(Base::table('posts.created'), 'desc')
+			->take($per_page)
+			->skip(--$page * $per_page)
+			->get(array(Base::table('posts.*'),
+				Base::table('users.id as author_id'),
+				Base::table('users.bio as author_bio'),
+				Base::table('users.real_name as author_name')));
+
+		return array($total, $posts);
+	}
+
 }
