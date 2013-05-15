@@ -227,6 +227,52 @@ Route::post('search', function() {
 });
 
 /**
+ * Tagged
+ */
+Route::get(array('tagged', 'tagged/(:any)', 'tagged/(:any)/(:num)'), function($slug = '', $offset = 1) {
+	// mock tagged page
+	$page = new Page;
+	$page->id = 0;
+	$page->title = 'Tagged';
+	$page->slug = 'tagged';
+
+	// get tagged term
+	$term = filter_var($slug, FILTER_SANITIZE_STRING);
+	Session::put('tagd_'.slug($term), $term);
+	//$term = Session::get('tagd_'.$slug);
+
+	// revert double-dashes back to spaces
+	$term = str_replace('--', ' ', $term);
+
+	if($offset > 0) {
+		list($total, $posts) = Post::tagged($term, $offset, Config::meta('posts_per_page'));
+	} else {
+		return Response::create(new Template('404'), 404);
+	}
+
+	// tagged templating vars
+	Registry::set('page', $page);
+	Registry::set('page_offset', $offset);
+	Registry::set('tagged_term', $term);
+	Registry::set('tagged_results', new Items($posts));
+	Registry::set('total_posts', $total);
+
+	return new Template('tagged');
+});
+
+Route::post('tagged', function() {
+	// Tagged and save tag ID
+	$term = filter_var(Input::get('term', ''), FILTER_SANITIZE_STRING);
+
+	// replace spaces with double-dash to pass through url
+	$term = str_replace(' ', '--', $term);
+
+	Session::put('tagd_'.slug($term), $term);
+
+	return Response::redirect('tagged/' . slug($term));
+});
+
+/**
  * View pages
  */
 Route::get('(:all)', function($uri) {
