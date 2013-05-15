@@ -21,7 +21,7 @@
 					</div>
 
 					<footer>
-						Posted <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time> by <?php echo article_author('real_name'); ?>.<?php if(comments_open()&&$disqus_shortname!=''): ?> It has <a href="<?php echo article_url(); ?>#disqus_thread">0 Comments</a>.<?php endif; ?><?php echo article_custom_field('tags') ? '<br/>Tagged: '.article_custom_field('tags') : ''; ?>
+						Posted <time datetime="<?php echo date(DATE_W3C, article_time()); ?>"><?php echo relative_time(article_time()); ?></time> by <?php echo article_author('real_name'); ?>.<?php if(comments_open()&&$disqus_shortname!=''): ?> It has <a href="<?php echo article_url(); ?>#disqus_thread">0 Comments</a>.<?php endif; ?><?php if (article_custom_field('tags')) { echo '<br/>Tagged: '; $tagarray = array(); $tagexplode = explode(",", article_custom_field('tags')); foreach ($tagexplode as $taggy) { $tagarray[] = '<a href="'.tagged_url().'/'.$taggy.'">'.$taggy.'</a>'; } echo implode(", ", $tagarray); } ?>
 					</footer>
 				</article>
 			</li>
