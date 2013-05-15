@@ -5,7 +5,7 @@
 <?php if(has_tagged_results()): ?>
 	<ul class="items">
 		<?php $i = 0; while(tagged_results()): $i++; ?>
-		<li style="background: hsl(215,28%,<?php echo round((($i / posts_per_page()) * 20) + 20); ?>%);">
+		<li style="background: hsl(<?php echo round((360 / posts_per_page()) * $i); ?>,28%,<?php echo round((($i / posts_per_page()) * 20) + 20); ?>%);">
 			<article class="wrap">
 				<h2>
 					<a href="<?php echo article_url(); ?>" title="<?php echo article_title(); ?>"><?php echo article_title(); ?></a>
