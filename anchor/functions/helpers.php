@@ -89,8 +89,8 @@ function is_page() {
 function tag_cloud() {
 	$query = Query::table(Base::table('post_meta'))
 		->join(Base::table('extend'), Base::table('extend.id'), '=', Base::table('post_meta.extend'))
-		->where('extend.key', '=', 'tags');
-	$tags_all = $query->get('post_meta.data');
+		->where(Base::table('extend.key'), '=', 'tags');
+	$tags_all = $query->get();
 	$tags_arr = array();
 
 	foreach(array_keys($tags_all) as $tags_index) {
