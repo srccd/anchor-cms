@@ -1,5 +1,17 @@
 		<div class="wrap">
 	            <footer id="bottom">
+					<?php
+					// TAGS CLOUD OR LIST
+					$tagresult = tag_cloud();
+					if(isset($tagresult)) {
+						echo '<strong>Random Tags:</strong><br /><ul class="tags">';
+
+						foreach($tagresult as $tagname => $tagcount) {
+							echo '<li><label><a href="'.tagged_url().'/'.$tagname.'">'.$tagname.'</a></label><count>'.$tagcount.'</count></li>';
+						}
+						echo '</ul>';
+					}
+					?>
 	                <small>&copy; <?php echo date('Y'); ?> <?php echo site_name(); ?>. All rights reserved.</small>
 
 	                <ul role="navigation">

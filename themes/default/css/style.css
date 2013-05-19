@@ -327,3 +327,21 @@ ul.commentlist {
 		#bottom a {
 			text-decoration: none;
 		}
+
+/**
+ *   Footer with Tags
+ */
+#bottom ul.tags {
+	float: none;
+	list-style: none;
+	overflow:hidden;
+}
+	#bottom ul.tags li {
+		float: left;
+		padding-left:0;
+		padding-right: 20px;
+		font-size: 14px;
+	}
+	#bottom ul.tags li count {
+		display:none;
+	}
