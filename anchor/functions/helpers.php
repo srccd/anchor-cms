@@ -90,7 +90,7 @@ function tag_cloud() {
 	$query = Query::table(Base::table('post_meta'))
 		->join(Base::table('extend'), Base::table('extend.id'), '=', Base::table('post_meta.extend'))
 		->where(Base::table('extend.key'), '=', 'tags');
-	$tags_all = $query->get();
+	$tags_all = $query->get(array(Base::table('post_meta.data')));
 	$tags_arr = array();
 
 	foreach(array_keys($tags_all) as $tags_index) {
