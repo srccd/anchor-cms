@@ -84,3 +84,42 @@ function is_article() {
 function is_page() {
 	return Registry::get('page') !== null;
 }
+
+// Tag cloud
+function tag_cloud() {
+	$query = Query::table(Base::table('post_meta'))
+		->join(Base::table('extend'), Base::table('extend.id'), '=', Base::table('post_meta.extend'))
+		->where('extend.key', '=', 'tags');
+	$tags_all = $query->get('post_meta.data');
+	$tags_arr = array();
+
+	foreach(array_keys($tags_all) as $tags_index) {
+		$tags_this = '';
+		$tags_this = Json::decode($tags_all[$tags_index] ? $tags_all[$tags_index]->data : '{}');
+		if( ! empty($tags_this->text)) {
+			$tag_current = $tags_this->text;
+			$tag_current_arr = explode(",", $tag_current);
+			foreach ($tag_current_arr as $taggy) {
+				if(!isset($tags_arr[$taggy])) {
+					$tags_arr[$taggy] = 0;
+				}
+				$tags_arr[$taggy] = $tags_arr[$taggy] + 1;
+			}
+		}
+	}
+
+	//want to sort the results?
+	//uncomment one of these
+	//ksort($tags_arr); //by the tag name
+	//arsort($tags_arr); //by the count
+
+	//or want to pull in a set amount of random results
+	//10 in this example
+	//uncomment the 4 lines below
+	$tags_arr = array_slice($tags_arr, 0, 10, true);
+    $tags_arrshuffle = array_keys($tags_arr);
+    shuffle($tags_arrshuffle);
+    $tags_arr = array_merge(array_flip($tags_arrshuffle), $tags_arr);
+
+	return $tags_arr;
+}
