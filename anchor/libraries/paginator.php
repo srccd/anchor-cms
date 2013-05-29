@@ -28,7 +28,7 @@ class Paginator {
 		if($this->page < $pages) {
 			$page = $this->page + 1;
 
-			return '<a href="' . $this->url . '/' . $page . '">' . $text . '</a>';
+			return '<a href="' . $this->url . '/' . $page . '" class="prev">' . $text . '</a>';
 		}
 
 		return $default;
@@ -40,7 +40,7 @@ class Paginator {
 		if($this->page > 1) {
 			$page = $this->page - 1;
 
-			return '<a href="' . $this->url . '/' . $page . '">' . $text . '</a>';
+			return '<a href="' . $this->url . '/' . $page . '" class="next">' . $text . '</a>';
 		}
 
 		return $default;
