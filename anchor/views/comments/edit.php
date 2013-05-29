@@ -26,7 +26,7 @@
 
 			<p>
 				<label><?php echo __('comments.text'); ?>:</label>
-				<?php echo Form::textarea('text', Input::previous('text', $comment->text)); ?>
+				<?php echo Form::textarea('text', Input::previous('text', htmlspecialchars($comment->text))); ?>
 				<em><?php echo __('comments.text_explain'); ?></em>
 			</p>
 
