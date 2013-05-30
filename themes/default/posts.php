@@ -14,7 +14,16 @@
 
 					<div class="content">
 						<?php
-						echo article_custom_field('attachimg1') ? '<p><a href="'.article_custom_field('attachimg1').'"><img src="'.article_custom_field('attachimg1').'_preview.png" alt="Attached Image." /></a></p>' : '';
+						echo article_description() ? '<p><strong>'.article_description().'</strong></p>' : '';
+						if (article_custom_field('attachimg1')) {
+							echo '<p><a href="'.article_custom_field('attachimg1').'"><img src="'.article_custom_field('attachimg1').'_preview.png" alt="Attached Image." /></a></p>';
+						}elseif (article_custom_field('videoyoutubeid')) {
+							echo '<iframe width="500" height="281" src="http://www.youtube.com/embed/'.article_custom_field('videoyoutubeid').'" frameborder="0" allowfullscreen></iframe> <p><a href="http://youtu.be/'.article_custom_field('videoyoutubeid').'">See at YouTube</a>.</p>';
+						}elseif (article_custom_field('videohuluid')) {
+							echo '<iframe width="500" height="281" src="http://www.hulu.com/embed.html?eid='.article_custom_field('videohuluid').'" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://hulu.com/watch/?eid='.article_custom_field('videohuluid').'">See at Hulu</a>.</p>';
+						}elseif (article_custom_field('videovimeoid')) {
+							echo '<iframe src="http://player.vimeo.com/video/'.article_custom_field('videovimeoid').'" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p><a href="http://vimeo.com/'.article_custom_field('videovimeoid').'">See at Vimeo</a>.</p>';
+						}
 						if (article_custom_field('processmarkdown')=='no') {
 							echo article_html();
 						}else{
