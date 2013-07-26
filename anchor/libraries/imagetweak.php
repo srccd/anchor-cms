@@ -4,7 +4,9 @@ class ImageTweak extends Image {
 		if(file_exists($file) === false) {
 			return false;
 		}
-		$exifofimage = @exif_read_data($file);
+		if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), array("tiff","tif","jpeg","jpg"))) {
+			$exifofimage = @exif_read_data($file);
+		}
 		if(!empty($exifofimage['Orientation'])) {
 			switch($exifofimage['Orientation']) {
 				case 8:
