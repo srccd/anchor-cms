@@ -51,7 +51,8 @@ class Post extends Base {
 
 		$total = $query->count();
 
-		$posts = $query->take($per_page)
+		$posts = $query->sort(Base::table('posts.created'), 'desc')
+			->take($per_page)
 			->skip(--$page * $per_page)
 			->get(array(Base::table('posts.*'),
 				Base::table('users.id as author_id'),
