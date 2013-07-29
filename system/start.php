@@ -13,7 +13,7 @@
 /**
  * Boot the environment
  */
-require PATH . 'boot' . EXT;
+require PATH . 'system/boot' . EXT;
 
 /**
  * Boot the application
