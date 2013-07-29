@@ -33,7 +33,7 @@ function has_search_pagination() {
 	return Registry::get('total_posts') > Config::meta('posts_per_page');
 }
 
-function search_next($text = 'Next &rarr;', $default = '') {
+function search_prev($text = '&larr; Previous', $default = '') {
 	$per_page = Config::meta('posts_per_page');
 	$page = Registry::get('page_offset');
 
@@ -50,13 +50,13 @@ function search_next($text = 'Next &rarr;', $default = '') {
 	$url = base_url($search_page->slug . '/' . $term . '/' . $next);
 
 	if(($page - 1) < $pages) {
-		return '<a href="' . $url . '" class="next">' . $text . '</a>';
+		return '<a href="' . $url . '" class="prev">' . $text . '</a>';
 	}
 
 	return $default;
 }
 
-function search_prev($text = '&larr; Previous', $default = '') {
+function search_next($text = 'Next &rarr;', $default = '') {
 	$per_page = Config::get('meta.posts_per_page');
 	$page = Registry::get('page_offset');
 
@@ -73,7 +73,7 @@ function search_prev($text = '&larr; Previous', $default = '') {
 	$url = base_url($search_page->slug . '/' . $term . '/' . $prev);
 
 	if($offset > 0) {
-		return '<a href="' . $url . '" class="prev">' . $text . '</a>';
+		return '<a href="' . $url . '" class="next">' . $text . '</a>';
 	}
 
 	return $default;
