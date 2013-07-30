@@ -4,6 +4,8 @@ Anchor is a super-simple, lightweight blog system, made to let you just write. [
 
 ### Customized
 
+This copy is for a fresh install.
+
 This version of Anchor is modified to include bug fixes and additional features included below:
 
 - Disable Directory Browsing with Default HTAccess
