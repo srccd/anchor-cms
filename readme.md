@@ -4,7 +4,7 @@ Anchor is a super-simple, lightweight blog system, made to let you just write. [
 
 ### Customized
 
-This copy is for a fresh install.
+This copy is configured for post-installation. You can backup your content folder and any custom theme folders, then delete your Anchor installation files. Upload this copy of the files in its place. Then put your content folder and any custom theme folders back in place.
 
 This version of Anchor is modified to include bug fixes and additional features included below:
 
